@@ -4,7 +4,7 @@ import kotlin.math.min
 
 class FastFourierTransform {
     companion object {
-        fun ceilPow2(n: Int): Int {
+        inline fun ceilPow2(n: Int): Int {
             var x = 0
             while ((1 shl x) < n) x++
             return x
@@ -46,7 +46,7 @@ class FastFourierTransform {
             }
         }
 
-        fun butterfly(a: ModIntArray, h: Int) {
+        inline fun butterfly(a: ModIntArray, h: Int) {
             for (ph in 1..h) {
                 val p = 1 shl (h - ph)
                 var now = ModInt(1)
@@ -63,7 +63,7 @@ class FastFourierTransform {
             }
         }
 
-        fun butterflyInv(a: ModIntArray, h: Int) {
+        inline fun butterflyInv(a: ModIntArray, h: Int) {
             for (ph in h downTo 1) {
                 val p = 1 shl (h - ph)
                 var iNow = ModInt(1)
@@ -81,7 +81,7 @@ class FastFourierTransform {
         }
 
         // mod = 998244353
-        fun convolution(a: ModIntArray, b: ModIntArray): ModIntArray {
+        inline fun convolution(a: ModIntArray, b: ModIntArray): ModIntArray {
             val n = a.size
             val m = b.size
             if (min(n, m) <= 60) {

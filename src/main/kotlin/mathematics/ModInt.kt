@@ -1,13 +1,13 @@
 package mathematics
 
-class ModInt(val num: Long) {
+inline class ModInt(val num: Long) {
     companion object {
         const val mod: Long = 1000000007L
         // const val mod: Long = 998244353L
 
-        fun pow(v: ModInt, k: Long) = pow(v.num, k)
+        inline fun pow(v: ModInt, k: Long) = pow(v.num, k)
 
-        fun pow(v: Long, k: Long): ModInt {
+        inline fun pow(v: Long, k: Long): ModInt {
             var ret = 1L
             var tmpV = v
             var tmpK = k % (mod - 1)
@@ -19,70 +19,70 @@ class ModInt(val num: Long) {
             return ModInt(ret)
         }
 
-        fun pow(v: Int, k: Long): ModInt = pow(v.toLong(), k)
-        fun pow(v: ModInt, k: Int) = pow(v.num, k.toLong())
-        fun pow(v: Int, k: Int) = pow(v.toLong(), k.toLong())
-        fun pow(v: Long, k: Int) = pow(v, k.toLong())
+        inline fun pow(v: Int, k: Long): ModInt = pow(v.toLong(), k)
+        inline fun pow(v: ModInt, k: Int) = pow(v.num, k.toLong())
+        inline fun pow(v: Int, k: Int) = pow(v.toLong(), k.toLong())
+        inline fun pow(v: Long, k: Int) = pow(v, k.toLong())
 
-        fun inverse(v: ModInt) = pow(v.num, mod - 2)
-        fun inverse(v: Long) = pow(v, mod - 2)
-        fun inverse(v: Int) = pow(v.toLong(), mod - 2)
+        inline fun inverse(v: ModInt) = pow(v.num, mod - 2)
+        inline fun inverse(v: Long) = pow(v, mod - 2)
+        inline fun inverse(v: Int) = pow(v.toLong(), mod - 2)
     }
 
     constructor(num: Int) : this(num.toLong())
 
-    operator fun plus(right: ModInt): ModInt {
+    inline operator fun plus(right: ModInt): ModInt {
         var ret = num + right.num
         if (ret >= mod) ret -= mod
         return ModInt(ret)
     }
 
-    operator fun plus(right: Long) = plus(rem(right))
-    operator fun plus(right: Int) = plus(rem(right))
+    inline operator fun plus(right: Long) = plus(rem(right))
+    inline operator fun plus(right: Int) = plus(rem(right))
 
-    operator fun minus(right: ModInt): ModInt {
+    inline operator fun minus(right: ModInt): ModInt {
         var ret = num - right.num
         if (ret < 0) ret += mod
         return ModInt(ret)
     }
 
-    operator fun minus(right: Long) = minus(rem(right))
-    operator fun minus(right: Int) = minus(rem(right))
+    inline operator fun minus(right: Long) = minus(rem(right))
+    inline operator fun minus(right: Int) = minus(rem(right))
 
-    operator fun times(right: ModInt) = ModInt((num * right.num) % mod)
-    operator fun times(right: Long) = times(rem(right))
-    operator fun times(right: Int) = times(rem(right))
+    inline operator fun times(right: ModInt) = ModInt((num * right.num) % mod)
+    inline operator fun times(right: Long) = times(rem(right))
+    inline operator fun times(right: Int) = times(rem(right))
 
-    override fun toString(): String {
+    override inline fun toString(): String {
         return num.toString()
     }
 
 
-    fun rem(num: Long): ModInt {
+    inline fun rem(num: Long): ModInt {
         return if (num >= 0) ModInt(num % mod) else ModInt(num % mod + mod)
     }
 
-    fun rem(num: Int): ModInt {
+    inline fun rem(num: Int): ModInt {
         return if (num >= 0) ModInt(num % mod) else ModInt(num % mod + mod)
     }
 }
 
-class ModIntArray(private val ar: LongArray) : Collection<ModInt> {
-    operator fun get(i: Int) = ModInt(ar[i])
-    operator fun set(i: Int, v: ModInt) {
+class ModIntArray(val ar: LongArray) : Collection<ModInt> {
+    inline operator fun get(i: Int) = ModInt(ar[i])
+    inline operator fun set(i: Int, v: ModInt) {
         ar[i] = v.num
     }
 
-    override val size = ar.size
-    override fun contains(element: ModInt) = ar.contains(element.num)
-    override fun containsAll(elements: Collection<ModInt>) = elements.all(::contains)
-    override fun isEmpty() = ar.isEmpty()
-    override fun iterator(): Iterator<ModInt> = object : Iterator<ModInt> {
+    override inline val size get() = ar.size
+    override inline fun contains(element: ModInt) = ar.contains(element.num)
+    override inline fun containsAll(elements: Collection<ModInt>) = elements.all(::contains)
+    override inline fun isEmpty() = ar.isEmpty()
+    override inline fun iterator(): Iterator<ModInt> = object : Iterator<ModInt> {
         var index = 0
-        override fun hasNext(): Boolean = index < size
-        override fun next(): ModInt = get(index++)
+        override inline fun hasNext(): Boolean = index < size
+        override inline fun next(): ModInt = get(index++)
     }
 }
 
-fun ModIntArray(size: Int) = ModIntArray(LongArray(size))
-fun ModIntArray(size: Int, init: (Int) -> ModInt) = ModIntArray(LongArray(size) { init(it).num })
+inline fun ModIntArray(size: Int) = ModIntArray(LongArray(size))
+inline fun ModIntArray(size: Int, init: (Int) -> ModInt) = ModIntArray(LongArray(size) { init(it).num })
