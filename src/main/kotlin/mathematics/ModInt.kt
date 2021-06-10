@@ -19,16 +19,17 @@ class ModInt(val num: Long) {
             return ModInt(ret)
         }
 
-        fun pow(v: Number, k: Long): ModInt = pow(v.toLong(), k)
-        fun pow(v: ModInt, k: Number) = pow(v.num, k.toLong())
-        fun pow(v: Number, k: Number) = pow(v.toLong(), k.toLong())
+        fun pow(v: Int, k: Long): ModInt = pow(v.toLong(), k)
+        fun pow(v: ModInt, k: Int) = pow(v.num, k.toLong())
+        fun pow(v: Int, k: Int) = pow(v.toLong(), k.toLong())
+        fun pow(v: Long, k: Int) = pow(v, k.toLong())
 
         fun inverse(v: ModInt) = pow(v.num, mod - 2)
-        fun inverse(v: Number) = pow(v.toLong(), mod - 2)
-
+        fun inverse(v: Long) = pow(v, mod - 2)
+        fun inverse(v: Int) = pow(v.toLong(), mod - 2)
     }
 
-    constructor(num: Number) : this(num.toLong())
+    constructor(num: Int) : this(num.toLong())
 
     operator fun plus(right: ModInt): ModInt {
         var ret = num + right.num
@@ -36,7 +37,8 @@ class ModInt(val num: Long) {
         return ModInt(ret)
     }
 
-    operator fun plus(right: Number) = plus(rem(right))
+    operator fun plus(right: Long) = plus(rem(right))
+    operator fun plus(right: Int) = plus(rem(right))
 
     operator fun minus(right: ModInt): ModInt {
         var ret = num - right.num
@@ -44,18 +46,23 @@ class ModInt(val num: Long) {
         return ModInt(ret)
     }
 
-    operator fun minus(right: Number) = minus(rem(right))
+    operator fun minus(right: Long) = minus(rem(right))
+    operator fun minus(right: Int) = minus(rem(right))
 
     operator fun times(right: ModInt) = ModInt((num * right.num) % mod)
-    operator fun times(right: Number) = times(rem(right))
+    operator fun times(right: Long) = times(rem(right))
+    operator fun times(right: Int) = times(rem(right))
 
     override fun toString(): String {
         return num.toString()
     }
 
 
-    private fun rem(num: Number): ModInt {
-        val l = num.toLong()
-        return if (l >= 0) ModInt(l % mod) else ModInt(l % mod + mod)
+    private fun rem(num: Long): ModInt {
+        return if (num >= 0) ModInt(num % mod) else ModInt(num % mod + mod)
+    }
+
+    private fun rem(num: Int): ModInt {
+        return if (num >= 0) ModInt(num % mod) else ModInt(num % mod + mod)
     }
 }
