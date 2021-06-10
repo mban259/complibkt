@@ -66,3 +66,23 @@ class ModInt(val num: Long) {
         return if (num >= 0) ModInt(num % mod) else ModInt(num % mod + mod)
     }
 }
+
+class ModIntArray(private val ar: LongArray) : Collection<ModInt> {
+    operator fun get(i: Int) = ModInt(ar[i])
+    operator fun set(i: Int, v: ModInt) {
+        ar[i] = v.num
+    }
+
+    override val size = ar.size
+    override fun contains(element: ModInt) = ar.contains(element.num)
+    override fun containsAll(elements: Collection<ModInt>) = elements.all(::contains)
+    override fun isEmpty() = ar.isEmpty()
+    override fun iterator(): Iterator<ModInt> = object : Iterator<ModInt> {
+        var index = 0
+        override fun hasNext(): Boolean = index < size
+        override fun next(): ModInt = get(index++)
+    }
+}
+
+fun ModIntArray(size: Int) = ModIntArray(LongArray(size))
+fun ModIntArray(size: Int, init: (Int) -> ModInt) = ModIntArray(LongArray(size) { init(it).num })
