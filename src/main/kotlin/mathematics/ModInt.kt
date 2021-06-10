@@ -58,11 +58,11 @@ class ModInt(val num: Long) {
     }
 
 
-    private fun rem(num: Long): ModInt {
+    fun rem(num: Long): ModInt {
         return if (num >= 0) ModInt(num % mod) else ModInt(num % mod + mod)
     }
 
-    private fun rem(num: Int): ModInt {
+    fun rem(num: Int): ModInt {
         return if (num >= 0) ModInt(num % mod) else ModInt(num % mod + mod)
     }
 }
